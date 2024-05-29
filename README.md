@@ -45,11 +45,11 @@ To run a MeowLang program, use the following command:
 - [ ] **Lexer**: Convert input into tokens
 - [ ] **Parser**: Convert tokens into an Abstract Syntax Tree (AST)
 - [ ] **Interpreter**: Execute the AST
-- [ ] **Variable Declaration**: Implement `meow` for declaring variables
+- [ ] **Variable Declaration**: Implement `lick` for declaring variables
 - [ ] **Print/Output**: Implement `purr` for printing/outputting values
 - [ ] **Conditionals**: Implement `hiss` for if-else statements
 - [ ] **Loops**: Implement `scratch` for while loops
-- [ ] **Function Definitions**: Implement `paw` for defining functions
+- [ ] **Function Definitions**: Implement `meow` for defining functions
 - [ ] **Return Statement**: Implement `claw` for returning values from functions
 - [ ] **Sleep Function**: Implement `nap` for sleeping
 
@@ -61,11 +61,11 @@ Here's a sneak peek at what a MeowLang program might look like:
 # This is a simple MeowLang program
 
 # Variable declaration
-meow a = 5
-meow b = 10
+lick a = 5
+lick b = 10
 
 # Function definition
-paw add(p, q) {
+meow add(p, q) {
     claw p + q
 }
 
@@ -84,7 +84,7 @@ scratch (a < b) {
 }
 
 # Function call
-meow result = add(a, b)
+lick result = add(a, b)
 purr "Result of addition: " + result
 ```
 

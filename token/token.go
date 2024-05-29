@@ -36,12 +36,12 @@ const (
 	RBRACE = "}"
 
 	// Keywords
+	CLAW    = "CLAW"
+	HISS    = "HISS"
+	LICK    = "LICK"
 	MEOW    = "MEOW"
 	PURR    = "PURR"
-	HISS    = "HISS"
 	SCRATCH = "SCRATCH"
-	PAW     = "PAW"
-	CLAW    = "CLAW"
 )
 
 type Token struct {
@@ -50,12 +50,12 @@ type Token struct {
 }
 
 var keywords = map[string]TokenType{
+	"claw":    CLAW,
+	"hiss":    HISS,
+	"lick":    LICK,
 	"meow":    MEOW,
 	"purr":    PURR,
-	"hiss":    HISS,
 	"scratch": SCRATCH,
-	"paw":     PAW,
-	"claw":    CLAW,
 }
 
 func LookupIdent(ident string) TokenType {

@@ -7,9 +7,9 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `meow x = 5;
-              meow y = 10;
-              meow add = paw(a, b) {
+	input := `lick x = 5;
+              lick y = 10;
+              lick add = meow(a, b) {
                   claw a + b;
               };
               purr add(x, y);`
@@ -18,20 +18,20 @@ func TestNextToken(t *testing.T) {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
-		{token.MEOW, "meow"},
+		{token.LICK, "lick"},
 		{token.IDENT, "x"},
 		{token.ASSIGN, "="},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.MEOW, "meow"},
+		{token.LICK, "lick"},
 		{token.IDENT, "y"},
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
-		{token.MEOW, "meow"},
+		{token.LICK, "lick"},
 		{token.IDENT, "add"},
 		{token.ASSIGN, "="},
-		{token.PAW, "paw"},
+		{token.MEOW, "meow"},
 		{token.LPAREN, "("},
 		{token.IDENT, "a"},
 		{token.COMMA, ","},
