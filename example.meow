@@ -1,0 +1,28 @@
+# This is a simple MeowLang program
+
+# Variable declaration
+meow a = 5
+meow b = 10
+
+# Function definition
+paw add(p, q) {
+    claw p + q
+}
+
+# Conditional
+hiss (a < b) {
+    purr "a is less than b"
+} else {
+    purr "a is not less than b"
+}
+
+# Loop
+scratch (a < b) {
+    purr a
+    a = a + 1
+    nap(1)  # Sleep for 1 unit of time
+}
+
+# Function call
+meow result = add(a, b)
+purr "Result of addition: " + result
