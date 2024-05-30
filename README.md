@@ -42,10 +42,10 @@ To run a MeowLang program, use the following command:
 
 ## Basic Features Checklist ✅
 
-- [ ] **Lexer**: Convert input into tokens
-- [ ] **Parser**: Convert tokens into an Abstract Syntax Tree (AST)
-- [ ] **Interpreter**: Execute the AST
-- [ ] **Variable Declaration**: Implement `lick` for declaring variables
+- [x] **Lexer**: Convert input into tokens
+- [x] **Parser**: Convert tokens into an Abstract Syntax Tree (AST)
+- [x] **Interpreter**: Execute the AST
+- [x] **Variable Declaration**: Implement `lick` for declaring variables
 - [ ] **Print/Output**: Implement `purr` for printing/outputting values
 - [ ] **Conditionals**: Implement `hiss` for if-else statements
 - [ ] **Loops**: Implement `scratch` for while loops
