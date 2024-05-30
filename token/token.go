@@ -32,14 +32,17 @@ const (
 
 	LPAREN = "("
 	RPAREN = ")"
+
 	LBRACE = "{"
 	RBRACE = "}"
 
 	// Keywords
 	CLAW    = "CLAW"
+	GROWL   = "GROWL"
 	HISS    = "HISS"
 	LICK    = "LICK"
 	MEOW    = "MEOW"
+	NAP     = "NAP"
 	PURR    = "PURR"
 	SCRATCH = "SCRATCH"
 )
@@ -51,9 +54,11 @@ type Token struct {
 
 var keywords = map[string]TokenType{
 	"claw":    CLAW,
+	"growl":   GROWL,
 	"hiss":    HISS,
 	"lick":    LICK,
 	"meow":    MEOW,
+	"nap":     NAP,
 	"purr":    PURR,
 	"scratch": SCRATCH,
 }
