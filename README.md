@@ -47,43 +47,44 @@ To run a MeowLang program, use the following command:
 - [x] **Interpreter**: Execute the AST
 - [x] **Variable Declaration**: Implement `lick` for declaring variables
 - [ ] **Print/Output**: Implement `purr` for printing/outputting values
-- [ ] **Conditionals**: Implement `hiss` for if-else statements
+- [ ] **Conditionals**: Implement `hiss-growl` for if-else statements
 - [ ] **Loops**: Implement `scratch` for while loops
 - [ ] **Function Definitions**: Implement `meow` for defining functions
 - [ ] **Return Statement**: Implement `claw` for returning values from functions
 - [ ] **Sleep Function**: Implement `nap` for sleeping
+- [ ] **Comments**: Implement `//`, `/*` and `*/` for comments
 
 ## Example Code 📜
 
 Here's a sneak peek at what a MeowLang program might look like:
 
 ```meowlang
-# This is a simple MeowLang program
+// This is a simple MeowLang program
 
-# Variable declaration
+// Variable declaration
 lick a = 5
 lick b = 10
 
-# Function definition
+// Function definition
 meow add(p, q) {
     claw p + q
 }
 
-# Conditional
+// Conditional
 hiss (a < b) {
     purr "a is less than b"
-} else {
+} growl {
     purr "a is not less than b"
 }
 
-# Loop
+// Loop
 scratch (a < b) {
     purr a
     a = a + 1
-    nap(1)  # Sleep for 1 unit of time
+    nap(1) // Sleep for 1 unit of time
 }
 
-# Function call
+// Function call
 lick result = add(a, b)
 purr "Result of addition: " + result
 ```
