@@ -37,6 +37,12 @@ func (l *Lexer) Tokenize() []token.Token {
 			tokens = append(tokens, token.Token{Type: token.ASSIGN, Literal: string(l.ch)})
 		case '+':
 			tokens = append(tokens, token.Token{Type: token.PLUS, Literal: string(l.ch)})
+		case '-':
+			tokens = append(tokens, token.Token{Type: token.MINUS, Literal: string(l.ch)})
+		case '*':
+			tokens = append(tokens, token.Token{Type: token.ASTERISK, Literal: string(l.ch)})
+		case '/':
+			tokens = append(tokens, token.Token{Type: token.SLASH, Literal: string(l.ch)})
 		case ';':
 			tokens = append(tokens, token.Token{Type: token.SEMICOLON, Literal: string(l.ch)})
 		case '(':
@@ -47,6 +53,10 @@ func (l *Lexer) Tokenize() []token.Token {
 			tokens = append(tokens, token.Token{Type: token.LBRACE, Literal: string(l.ch)})
 		case '}':
 			tokens = append(tokens, token.Token{Type: token.RBRACE, Literal: string(l.ch)})
+		case '>':
+			tokens = append(tokens, token.Token{Type: token.GT, Literal: string(l.ch)})
+		case '<':
+			tokens = append(tokens, token.Token{Type: token.LT, Literal: string(l.ch)})
 		case ',':
 			tokens = append(tokens, token.Token{Type: token.COMMA, Literal: string(l.ch)})
 		default:
