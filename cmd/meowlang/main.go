@@ -3,6 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/AlyxPink/meowlang/interpreter"
+	"github.com/AlyxPink/meowlang/lexer"
+	"github.com/AlyxPink/meowlang/parser"
 )
 
 func main() {
@@ -18,5 +22,12 @@ func main() {
 		return
 	}
 
-	fmt.Print(content)
+	l := lexer.NewLexer(string(content))
+	tokens := l.Tokenize()
+
+	p := parser.NewParser(tokens)
+	ast := p.ParseProgram()
+
+	i := interpreter.NewInterpreter()
+	i.Interpret(ast)
 }
