@@ -21,6 +21,8 @@ func (i *Interpreter) Interpret(node ast.Node) object.Object {
 		return i.evalProgram(node)
 	case *ast.AssignStatement:
 		return i.evalAssignStatement(node)
+	case *ast.PrintStatement:
+		return i.evalPrintStatement(node)
 	case *ast.FunctionStatement:
 		return i.evalFunctionStatement(node)
 	case *ast.ReturnStatement:
@@ -49,6 +51,14 @@ func (i *Interpreter) evalAssignStatement(stmt *ast.AssignStatement) object.Obje
 		i.env.Set(stmt.Name.Value, val)
 	}
 	return val
+}
+
+func (i *Interpreter) evalPrintStatement(stmt *ast.PrintStatement) object.Object {
+	val := i.Interpret(stmt.Value)
+	if val != nil {
+		fmt.Println(val.Inspect())
+	}
+	return nil
 }
 
 func (i *Interpreter) evalFunctionStatement(stmt *ast.FunctionStatement) object.Object {

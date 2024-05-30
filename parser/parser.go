@@ -40,6 +40,8 @@ func (p *Parser) parseStatement() ast.Statement {
 	switch p.peek().Type {
 	case token.LICK:
 		return p.parseAssignStatement()
+	case token.PURR:
+		return p.parsePrintStatement()
 	case token.MEOW:
 		return p.parseFunctionStatement()
 	case token.CLAW:
@@ -59,6 +61,14 @@ func (p *Parser) parseAssignStatement() *ast.AssignStatement {
 	}
 
 	stmt.Value = p.parseExpression()
+
+	return stmt
+}
+
+func (p *Parser) parsePrintStatement() *ast.PrintStatement {
+	stmt := &ast.PrintStatement{Token: p.advance()} // consume 'purr' token
+
+	stmt.Value = p.parseExpression() // parse expression
 
 	return stmt
 }
