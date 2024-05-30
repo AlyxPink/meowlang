@@ -122,6 +122,7 @@ scratch (a < b) {
 		{token.PURR, "purr"}, {token.IDENT, "a"},
 		{token.IDENT, "a"}, {token.ASSIGN, "="}, {token.IDENT, "a"}, {token.PLUS, "+"}, {token.INT, "1"},
 		{token.NAP, "nap"}, {token.LPAREN, "("}, {token.INT, "1"}, {token.RPAREN, ")"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 
