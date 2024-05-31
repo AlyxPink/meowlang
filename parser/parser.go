@@ -54,7 +54,7 @@ func (p *Parser) parseStatement() ast.Statement {
 func (p *Parser) parseAssignStatement() *ast.AssignStatement {
 	stmt := &ast.AssignStatement{Token: p.advance()} // consume 'lick' token
 
-	stmt.Name = p.parseIdentifier() // parse identifier
+	stmt.Name = p.parseIdentifier()
 
 	if !p.expectPeek(token.ASSIGN) { // consume assign token
 		return nil
@@ -68,7 +68,7 @@ func (p *Parser) parseAssignStatement() *ast.AssignStatement {
 func (p *Parser) parsePrintStatement() *ast.PrintStatement {
 	stmt := &ast.PrintStatement{Token: p.advance()} // consume 'purr' token
 
-	stmt.Value = p.parseExpression() // parse expression
+	stmt.Value = p.parseExpression()
 
 	return stmt
 }
@@ -76,7 +76,7 @@ func (p *Parser) parsePrintStatement() *ast.PrintStatement {
 func (p *Parser) parseFunctionStatement() *ast.FunctionStatement {
 	stmt := &ast.FunctionStatement{Token: p.advance()} // consume 'meow' token
 
-	stmt.Name = p.parseIdentifier() // parse identifier
+	stmt.Name = p.parseIdentifier()
 
 	if !p.expectPeek(token.LPAREN) {
 		return nil
@@ -170,6 +170,8 @@ func (p *Parser) parsePrimary() ast.Expression {
 	switch p.peek().Type {
 	case token.INT:
 		return p.parseIntegerLiteral()
+	case token.STRING:
+		return p.parseStringLiteral()
 	case token.IDENT:
 		return p.parseIdentifier()
 	default:
@@ -178,7 +180,13 @@ func (p *Parser) parsePrimary() ast.Expression {
 }
 
 func (p *Parser) parseIntegerLiteral() *ast.IntegerLiteral {
-	lit := &ast.IntegerLiteral{Token: p.advance()} // consume integer token
+	lit := &ast.IntegerLiteral{
+		Token: p.peek(),
+	}
+
+	if !p.expectPeek(token.INT) { // consume int token
+		return nil
+	}
 
 	value, err := strconv.ParseInt(lit.Token.Literal, 0, 64)
 	if err != nil {
@@ -187,6 +195,19 @@ func (p *Parser) parseIntegerLiteral() *ast.IntegerLiteral {
 	}
 
 	lit.Value = value
+	return lit
+}
+
+func (p *Parser) parseStringLiteral() *ast.StringLiteral {
+	lit := &ast.StringLiteral{
+		Token: p.peek(),
+		Value: p.peek().Literal,
+	}
+
+	if !p.expectPeek(token.STRING) { // consume string token
+		return nil
+	}
+
 	return lit
 }
 

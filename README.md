@@ -65,6 +65,9 @@ Here's a sneak peek at what a MeowLang program might look like:
 lick a = 5
 lick b = 10
 
+// Print statement
+purr "Meow :3 world!"
+
 // Function definition
 meow add(p, q) {
     claw p + q

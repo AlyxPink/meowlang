@@ -47,6 +47,8 @@ func (l *Lexer) Tokenize() []token.Token {
 			tokens = append(tokens, token.Token{Type: token.LT, Literal: string(l.ch)})
 		case ',':
 			tokens = append(tokens, token.Token{Type: token.COMMA, Literal: string(l.ch)})
+		case '"':
+			tokens = append(tokens, token.Token{Type: token.STRING, Literal: l.readString()})
 		case '/': // Comment or division operator
 			if l.peekChar() == '/' {
 				l.skipSingleLineComment()
@@ -105,6 +107,23 @@ func (l *Lexer) readNumber() string {
 		l.readChar()
 	}
 	return l.input[position:l.position]
+}
+
+func (l *Lexer) readString() string {
+	var s []byte
+	l.readChar() // consume '"'
+	for {
+		if l.ch == '"' {
+			l.readChar() // consume '"' or 0
+			break
+		}
+		s = append(s, l.ch) // consume character and add to string
+		l.readChar()
+		if l.ch == 0 { // EOF
+			break
+		}
+	}
+	return string(s)
 }
 
 func (l *Lexer) skipSingleLineComment() {

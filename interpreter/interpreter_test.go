@@ -11,8 +11,7 @@ import (
 func TestInterpreter(t *testing.T) {
 	input := `lick x = 5;
               lick y = 10;
-              lick result = x + y;
-              claw result;`
+              claw x + y;`
 
 	l := lexer.NewLexer(input)
 	p := parser.NewParser(l.Tokenize())

@@ -31,6 +31,8 @@ func (i *Interpreter) Interpret(node ast.Node) object.Object {
 		return i.evalIdentifier(node)
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
+	case *ast.StringLiteral:
+		return &object.String{Value: node.Value}
 	case *ast.InfixExpression:
 		return i.evalInfixExpression(node)
 	}
