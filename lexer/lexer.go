@@ -19,16 +19,6 @@ func NewLexer(input string) *Lexer {
 	return l
 }
 
-func (l *Lexer) readChar() {
-	if l.readPosition >= len(l.input) {
-		l.ch = 0
-	} else {
-		l.ch = l.input[l.readPosition]
-	}
-	l.position = l.readPosition
-	l.readPosition++
-}
-
 func (l *Lexer) Tokenize() []token.Token {
 	var tokens []token.Token
 	for l.ch != 0 {
@@ -41,8 +31,6 @@ func (l *Lexer) Tokenize() []token.Token {
 			tokens = append(tokens, token.Token{Type: token.MINUS, Literal: string(l.ch)})
 		case '*':
 			tokens = append(tokens, token.Token{Type: token.ASTERISK, Literal: string(l.ch)})
-		case '/':
-			tokens = append(tokens, token.Token{Type: token.SLASH, Literal: string(l.ch)})
 		case ';':
 			tokens = append(tokens, token.Token{Type: token.SEMICOLON, Literal: string(l.ch)})
 		case '(':
@@ -59,6 +47,14 @@ func (l *Lexer) Tokenize() []token.Token {
 			tokens = append(tokens, token.Token{Type: token.LT, Literal: string(l.ch)})
 		case ',':
 			tokens = append(tokens, token.Token{Type: token.COMMA, Literal: string(l.ch)})
+		case '/': // Comment or division operator
+			if l.peekChar() == '/' {
+				l.skipSingleLineComment()
+			} else if l.peekChar() == '*' {
+				l.skipBlockComment()
+			} else {
+				tokens = append(tokens, token.Token{Type: token.SLASH, Literal: string(l.ch)})
+			}
 		default:
 			if isSpace(l.ch) {
 				l.readChar()
@@ -80,6 +76,21 @@ func (l *Lexer) Tokenize() []token.Token {
 	return tokens
 }
 
+func (l *Lexer) readChar() {
+	l.peekChar()
+	l.readPosition++
+}
+
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		l.ch = 0
+	} else {
+		l.ch = l.input[l.readPosition]
+	}
+	l.position = l.readPosition
+	return l.ch
+}
+
 func (l *Lexer) readIdentifier() string {
 	position := l.position
 	for isLetter(l.ch) {
@@ -94,6 +105,27 @@ func (l *Lexer) readNumber() string {
 		l.readChar()
 	}
 	return l.input[position:l.position]
+}
+
+func (l *Lexer) skipSingleLineComment() {
+	for l.ch != '\n' && l.ch != 0 {
+		l.readChar()
+	}
+}
+
+func (l *Lexer) skipBlockComment() {
+	l.readChar() // consume '*'
+	for {
+		if l.ch == '*' && l.peekChar() == '/' {
+			l.readChar() // consume '*'
+			l.readChar() // consume '/'
+			break
+		}
+		l.readChar()
+		if l.ch == 0 {
+			break
+		}
+	}
 }
 
 func isSpace(ch byte) bool {

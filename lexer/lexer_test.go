@@ -155,10 +155,12 @@ purr "Result of addition: " + result`
 
 func TestComments(t *testing.T) {
 	input := `
+// This is a single-line comment
 lick a = 5
 purr a // This is a comment
 /* This is a
 multiline comment */
+/* This is a block comment */
 purr a`
 
 	tests := []struct {
