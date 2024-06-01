@@ -1,34 +1,89 @@
 package interpreter
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/AlyxPink/meowlang/lexer"
-	"github.com/AlyxPink/meowlang/object"
 	"github.com/AlyxPink/meowlang/parser"
 )
 
-func TestInterpreter(t *testing.T) {
-	input := `lick x = 5;
-              lick y = 10;
-              claw x + y;`
-
+func interpret(input string) string {
 	l := lexer.NewLexer(input)
 	p := parser.NewParser(l.Tokenize())
 	program := p.ParseProgram()
 
-	interpreter := NewInterpreter()
-	result := interpreter.Interpret(program)
+	var out bytes.Buffer
+	interpreter := NewInterpreterWithOutput(&out)
+	interpreter.Interpret(program)
 
-	if result == nil {
-		t.Fatalf("Interpret() returned nil")
+	return out.String()
+}
+
+func TestInterpreter_IntegerArithmetic(t *testing.T) {
+	input := `purr 1 + 2`
+	expectedOutput := "3\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
 	}
+}
 
-	if integer, ok := result.(*object.Integer); ok {
-		if integer.Value != 15 {
-			t.Errorf("result.Value not 15. got=%d", integer.Value)
-		}
-	} else {
-		t.Fatalf("result is not *object.Integer. got=%T (%+v)", result, result)
+func TestInterpreter_StringConcatenation(t *testing.T) {
+	input := `purr "Hello" + " world"`
+	expectedOutput := "Hello world\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
+	}
+}
+
+func TestInterpreter_VariableAssignment(t *testing.T) {
+	input := `lick x = 42; purr x;`
+	expectedOutput := "42\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
+	}
+}
+
+func TestInterpreter_PrintStatement(t *testing.T) {
+	input := `purr 123`
+	expectedOutput := "123\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
+	}
+}
+
+func TestInterpreter_FunctionDefinition(t *testing.T) {
+	input := `
+    meow double(a) {
+        claw a * 2;
+    }
+    purr double(5);`
+	expectedOutput := "10\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
+	}
+}
+
+func TestInterpreter_FunctionCall(t *testing.T) {
+	input := `
+    meow addTen(a) {
+        claw a + 10;
+    }
+    purr addTen(10);`
+	expectedOutput := "20\n"
+	output := interpret(input)
+
+	if output != expectedOutput {
+		t.Errorf("expected output %q, got %q", expectedOutput, output)
 	}
 }

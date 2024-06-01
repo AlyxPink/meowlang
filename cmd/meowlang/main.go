@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 
@@ -28,6 +29,9 @@ func main() {
 	p := parser.NewParser(tokens)
 	ast := p.ParseProgram()
 
-	i := interpreter.NewInterpreter()
+	var buf bytes.Buffer
+	i := interpreter.NewInterpreterWithOutput(&buf)
 	i.Interpret(ast)
+
+	fmt.Print(buf.String())
 }

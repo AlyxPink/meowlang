@@ -8,7 +8,11 @@ import (
 )
 
 func TestParsingFunctionStatements(t *testing.T) {
-	input := `meow add(a, b) { claw a + b; }`
+	input := `
+	meow add(a, b) {
+		purr 10
+		claw a + b
+	}`
 
 	l := lexer.NewLexer(input)
 	p := NewParser(l.Tokenize())
@@ -39,14 +43,19 @@ func TestParsingFunctionStatements(t *testing.T) {
 	testLiteralExpression(t, functionStmt.Parameters[0], "a")
 	testLiteralExpression(t, functionStmt.Parameters[1], "b")
 
-	if len(functionStmt.Body.Statements) != 1 {
-		t.Fatalf("functionStmt.Body.Statements does not contain 1 statement. got=%d", len(functionStmt.Body.Statements))
+	if len(functionStmt.Body.Statements) != 2 {
+		t.Fatalf("functionStmt.Body.Statements does not contain 2 statement. got=%d", len(functionStmt.Body.Statements))
 	}
 
-	bodyStmt, ok := functionStmt.Body.Statements[0].(*ast.ReturnStatement)
+	bodyPrintStmt, ok := functionStmt.Body.Statements[0].(*ast.PrintStatement)
 	if !ok {
-		t.Fatalf("functionStmt.Body.Statements[0] not *ast.ReturnStatement. got=%T", functionStmt.Body.Statements[0])
+		t.Fatalf("functionStmt.Body.Statements[0] not *ast.PrintStatement. got=%T", functionStmt.Body.Statements[0])
 	}
+	testPrintStatement(t, bodyPrintStmt, "10")
 
-	testInfixExpression(t, bodyStmt.ReturnValue, "a", "+", "b")
+	bodyReturnStmt, ok := functionStmt.Body.Statements[1].(*ast.ReturnStatement)
+	if !ok {
+		t.Fatalf("functionStmt.Body.Statements[0] not *ast.ReturnStatement. got=%T", functionStmt.Body.Statements[1])
+	}
+	testInfixExpression(t, bodyReturnStmt.ReturnValue, "a", "+", "b")
 }
