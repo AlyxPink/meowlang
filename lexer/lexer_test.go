@@ -158,8 +158,9 @@ func TestComments(t *testing.T) {
 // This is a single-line comment
 lick a = 5
 purr a // This is a comment
-/* This is a
-multiline comment */
+/* This is a multiline comment with a purr called
+purr 5
+and it should be ignored */
 /* This is a block comment */
 purr a`
 
