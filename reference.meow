@@ -1,11 +1,18 @@
 // This is a simple MeowLang program
 
+/* Not everything is implemented yet
+   Consider this as the planned syntax */
+
 // Variable declaration
 lick a = 5
 lick b = 10
+lick result = a + b
 
 // Print statement
-purr "Meow :3 world!"
+purr "Meow!"
+purr 125
+purr "Meow" + " " + ":3"
+purr result
 
 // Function definition
 meow add(p, q) {
@@ -27,5 +34,5 @@ scratch (a < b) {
 }
 
 // Function call
-lick result = add(a, b)
+lick result = add(10, 5)
 purr "Result of addition: " + result
