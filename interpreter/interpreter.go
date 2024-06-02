@@ -56,7 +56,7 @@ func (i *Interpreter) Interpret(node ast.Node) object.Object {
 	case *ast.InfixExpression:
 		return i.evalInfixExpression(node)
 	}
-	return nil
+	return &object.Null{}
 }
 
 // evalProgram evaluates the given program node.
@@ -109,7 +109,7 @@ func (i *Interpreter) evalPrintStatement(stmt *ast.PrintStatement) object.Object
 	if val != nil {
 		fmt.Fprintln(i.out, val.Inspect())
 	}
-	return nil
+	return &object.Null{}
 }
 
 // evalBlockStatement evaluates a block of statements.
@@ -125,7 +125,7 @@ func (i *Interpreter) evalBlockStatement(block *ast.BlockStatement) object.Objec
 func (i *Interpreter) evalCallExpression(exp *ast.CallExpression) object.Object {
 	function := i.Interpret(exp.Function)
 	if function == nil {
-		return nil
+		return &object.Null{}
 	}
 
 	args := make([]object.Object, len(exp.Arguments))
@@ -140,7 +140,7 @@ func (i *Interpreter) evalCallExpression(exp *ast.CallExpression) object.Object 
 func (i *Interpreter) applyFunction(fn object.Object, args []object.Object) object.Object {
 	function, ok := fn.(*object.Function)
 	if !ok {
-		return nil
+		return &object.Null{}
 	}
 
 	extendedEnv := object.NewEnclosedEnvironment(function.Env)
@@ -176,7 +176,7 @@ func (i *Interpreter) evalInfixExpression(exp *ast.InfixExpression) object.Objec
 		return i.evalStringInfixExpression(exp.Operator, left, right)
 	}
 
-	return nil
+	return &object.Null{}
 }
 
 // evalIntegerInfixExpression evaluates an infix expression with integer operands.
@@ -194,14 +194,14 @@ func (i *Interpreter) evalIntegerInfixExpression(operator string, left, right ob
 	case "/":
 		return &object.Integer{Value: leftVal / rightVal}
 	default:
-		return nil
+		return &object.Null{}
 	}
 }
 
 // evalStringInfixExpression evaluates an infix expression with string operands.
 func (i *Interpreter) evalStringInfixExpression(operator string, left, right object.Object) object.Object {
 	if operator != "+" {
-		return nil // or handle as an error
+		return &object.Null{} // or handle as an error
 	}
 
 	leftVal := left.(*object.String).Value
